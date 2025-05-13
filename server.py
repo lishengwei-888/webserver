@@ -75,25 +75,7 @@ def proxy(url):
     except Exception as e:
         return f"Proxy Error: {str(e)}", 500
 
-# 启动服务器
-def run_server():
-    server_ip = get_ip()
-    server_port = 5000
-    print(f"Flask代理服务器已启动")
-    print(f"代理地址: http://{server_ip}:5000")
-    print(f"使用示例: http://{server_ip}:5000/https://www.example.com")
-    app.run(host='0.0.0.0', port=server_port, threaded=True)
 
 if __name__ == '__main__':
-    # 在独立线程中启动，避免阻塞
-    server_thread = threading.Thread(target=run_server)
-    server_thread.daemon = True
-    server_thread.start()
-    
-    try:
-        # 保持主线程运行
-        while True:
-            input("按Enter键停止服务器...\n")
-            break
-    except KeyboardInterrupt:
-        print("服务器已停止")    
+    # 在主线程中运行Flask应用
+    app.run(debug=True, port=5000)
